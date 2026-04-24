@@ -3,7 +3,7 @@ use std::{
     ptr::NonNull,
 };
 
-use crate::allocation::block::*;
+use crate::allocation::{block::*, errors::BlockError};
 
 trait AllocRaw {
     fn alloc<T>(&self, object: T) -> *const T;

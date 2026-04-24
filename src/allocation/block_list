@@ -1,0 +1,22 @@
+pub struct BlockList {
+    head: Option<BumpBlock>,
+    overflow: Option<BumpBlock>,
+    rest: Vec<BumpBlock>,
+}
+
+impl BlockList {
+    fn overflow_alloc(&mut self, alloc_size: usize) -> Result<*const u8, BlockError> {
+        match self.overflow {
+            Some ...,
+            None => {
+                let mut overflow = BumpBlock::new()?;
+
+                let space = overflow.inner_alloc(alloc_size).expect("We exprected this object to fit!");
+
+                self.overflow = Some(overflow);
+
+                space
+            }
+        }
+    }
+}
