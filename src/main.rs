@@ -1,12 +1,23 @@
 use anyhow::Result;
-use crate::allocation::block::Block;
+use std::{env, process::exit};
 
-mod allocation;
+use crate::oil::{oil::Oil};
+
+mod oil;
 
 fn main() -> Result<()> {
-    let size = 8;
-    let block = Block::new(size)?;
+    let args: Vec<String> = env::args().collect();
 
-    block.drop();
+    if args.len() > 2 {
+        println!("Usage: oil [script]");
+        exit(64);
+    } else if args.len() == 2 {
+        let path = env::current_dir()?.to_string_lossy().into_owned();
+
+        Oil::run_file(&format!("{path}\\{}", args[1]))?;
+    } else {
+        Oil::run_prompt()?;
+    }
+
     Ok(())
 }
