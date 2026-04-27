@@ -194,7 +194,7 @@ impl Parser {
     }
 
     fn assignment(&mut self) -> Result<Expression> {
-        let expression = self.equality()?;
+        let expression = self.or()?;
 
         if self.match_next(&[TokenType::Equal]) {
             let value = self.assignment()?;
@@ -206,6 +206,32 @@ impl Parser {
         }
 
         Ok(expression)
+    }
+
+    fn or(&mut self) -> Result<Expression> {
+        let mut expr = self.and()?;
+
+        while self.match_next(&[TokenType::Or]) {
+            let operator = self.previous().clone();
+            let right = self.and()?;
+
+            expr = Expression::logical(expr, operator, right);
+        }
+
+        Ok(expr)
+    }
+
+    fn and(&mut self) -> Result<Expression> {
+        let mut expr = self.equality()?;
+
+        while self.match_next(&[TokenType::And]) {
+            let operator = self.previous().clone();
+            let right = self.equality()?;
+
+            expr = Expression::logical(expr, operator, right);
+        }
+
+        Ok(expr)
     }
 
     fn equality(&mut self) -> Result<Expression> {
@@ -372,14 +398,11 @@ impl Parser {
             }
 
             let found_boundary = match self.peek().token_type {
-                TokenType::Class
-                | TokenType::Func
-                | TokenType::Var
+                TokenType::Var
                 | TokenType::For
                 | TokenType::If
                 | TokenType::While
-                | TokenType::Print
-                | TokenType::Return => true,
+                | TokenType::Print => true,
                 _ => false,
             };
 

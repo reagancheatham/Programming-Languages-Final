@@ -221,7 +221,7 @@ impl Interpreter {
         right: &Expression,
     ) -> Result<Object> {
         let left = self.evaluate_expression(left)?;
-
+        
         match operator.token_type {
             TokenType::Or => {
                 if left.is_truthy() {
