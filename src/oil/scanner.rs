@@ -59,12 +59,8 @@ impl Scanner {
             self.scan_token();
         }
 
-        self.tokens.push(Token {
-            token_type: TokenType::EOF,
-            lexeme: "".to_string(),
-            literal: Some(Object::Null),
-            line: self.line,
-        });
+        self.tokens
+            .push(Token::new(TokenType::EOF, "", Object::Null, self.line));
 
         if self.had_error {
             Err(anyhow!("Scanner failed to scan tokens!"))
@@ -165,15 +161,8 @@ impl Scanner {
     fn add_token_with_literal(&mut self, token_type: TokenType, literal: Object) {
         let text = self.source[self.start..self.current].to_string();
 
-        self.tokens.push({
-            let line = self.line;
-            Token {
-                token_type: token_type,
-                lexeme: text,
-                literal: Some(literal),
-                line,
-            }
-        });
+        self.tokens
+            .push(Token::new(token_type, &text, literal, self.line));
     }
 
     fn match_next(&mut self, expected: char) -> bool {

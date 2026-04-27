@@ -113,7 +113,7 @@ impl Parser {
 
             Ok(Expression::grouping(expr))
         } else {
-            Err(Parser::error(self.peek(), "Expected expression."))
+            Err(Self::error(self.peek(), "Expected expression."))
         }
     }
 
@@ -167,7 +167,7 @@ impl Parser {
         if self.check(token_type) {
             Ok(self.advance())
         } else {
-            Err(Parser::error(self.peek(), message))
+            Err(Self::error(self.peek(), message))
         }
     }
 

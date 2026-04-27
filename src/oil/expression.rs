@@ -23,7 +23,7 @@ pub enum Expression {
 
 impl Expression {
     pub fn binary(left: Expression, operator: Token, right: Expression) -> Expression {
-        Expression::Binary {
+        Self::Binary {
             left: Box::new(left),
             operator,
             right: Box::new(right),
@@ -31,34 +31,32 @@ impl Expression {
     }
 
     pub fn unary(operator: Token, right: Expression) -> Expression {
-        Expression::Unary {
+        Self::Unary {
             operator,
             right: Box::new(right),
         }
     }
 
     pub fn grouping(expression: Expression) -> Expression {
-        Expression::Grouping {
+        Self::Grouping {
             expression: Box::new(expression),
         }
     }
 
     pub fn literal(value: Object) -> Expression {
-        Expression::Literal { value }
+        Self::Literal { value }
     }
 
     pub fn to_tree(&self) -> String {
         match self {
-            Expression::Binary {
+            Self::Binary {
                 left,
                 operator,
                 right,
-            } => Expression::parenthesize(&operator.lexeme, &[left, right]),
-            Expression::Grouping { expression } => Expression::parenthesize("", &[expression]),
-            Expression::Literal { value } => value.to_string(),
-            Expression::Unary { operator, right } => {
-                Expression::parenthesize(&operator.lexeme, &[right])
-            }
+            } => Self::parenthesize(&operator.lexeme, &[left, right]),
+            Self::Grouping { expression } => Self::parenthesize("", &[expression]),
+            Self::Literal { value } => value.to_string(),
+            Self::Unary { operator, right } => Self::parenthesize(&operator.lexeme, &[right]),
         }
     }
 
@@ -71,8 +69,7 @@ impl Expression {
 
         if name == "" {
             format!("{inner}")
-        }
-        else {
+        } else {
             format!("({name} {inner})")
         }
     }

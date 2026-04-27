@@ -1,7 +1,7 @@
 use anyhow::Result;
 use std::{env, process::exit};
 
-use crate::oil::{oil::Oil};
+use crate::oil::oil::Oil;
 
 mod oil;
 
@@ -14,7 +14,7 @@ fn main() -> Result<()> {
     } else if args.len() == 2 {
         let path = env::current_dir()?.to_string_lossy().into_owned();
 
-        Oil::run_file(&format!("{path}\\{}", args[1]))?;
+        Oil::run_file(&format!("{path}\\{}", args[1]));
     } else {
         Oil::run_prompt()?;
     }
