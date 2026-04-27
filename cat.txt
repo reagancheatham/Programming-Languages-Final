@@ -1,0 +1,6 @@
+var a;
+
+print "Input a value";
+read_input a;
+
+print a;

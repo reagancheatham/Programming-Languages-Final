@@ -4,5 +4,7 @@ mod token;
 mod object;
 mod scanner;
 mod expression;
+mod statement;
 mod parser;
 mod interpreter;
+mod environment;

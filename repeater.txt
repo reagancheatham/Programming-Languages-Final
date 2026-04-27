@@ -1,0 +1,15 @@
+var character;
+var loops;
+
+print "Input character to repeat:";
+read_input character;
+
+print "";
+print "Input number of times to repeat:";
+read_input loops;
+
+print "";
+print "Result:";
+for (var i = 0; i < loops; i = i + 1) {
+    print character;
+}

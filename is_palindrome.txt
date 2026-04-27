@@ -1,0 +1,12 @@
+var input;
+
+print "Input string:";
+read_input input;
+
+print "";
+print "Reversed value:";
+print -input;
+
+print "";
+print "Is palindrome:";
+print input == -input;

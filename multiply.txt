@@ -1,0 +1,13 @@
+var a;
+var b;
+
+print "Enter value for a:";
+read_input a;
+
+print "";
+print "Enter value for b:";
+read_input b;
+
+print "";
+print "Product:";
+print a * b;

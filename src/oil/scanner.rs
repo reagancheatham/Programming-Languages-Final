@@ -20,6 +20,7 @@ const KEYWORDS: phf::Map<&'static str, TokenType> = phf_map! {
     "null" => TokenType::Null,
     "or" => TokenType::Or,
     "print" => TokenType::Print,
+    "read_input" => TokenType::ReadInput,
     "return" => TokenType::Return,
     "super" => TokenType::Super,
     "this" => TokenType::This,
@@ -39,9 +40,9 @@ pub struct Scanner {
 }
 
 impl Scanner {
-    pub fn new(source: &str) -> Self {
+    pub fn new() -> Self {
         Self {
-            source: source.to_string(),
+            source: "".to_string(),
             tokens: Vec::new(),
             start: 0,
             current: 0,
@@ -50,9 +51,13 @@ impl Scanner {
         }
     }
 
-    pub fn scan_tokens(&mut self) -> Result<Vec<Token>> {
-        self.had_error = false;
+    pub fn scan_tokens(&mut self, source: &str) -> Result<Vec<Token>> {
+        self.source = source.to_string();
         self.tokens.clear();
+        self.start = 0;
+        self.current = 0;
+        self.line = 0;
+        self.had_error = false;
 
         while !self.is_at_end() {
             self.start = self.current;
@@ -94,6 +99,7 @@ impl Scanner {
                     Some(TokenType::Slash)
                 }
             }
+            '%' => Some(TokenType::Mod),
             '!' => Some(if self.match_next('=') {
                 TokenType::NotEqual
             } else {
@@ -129,7 +135,7 @@ impl Scanner {
                 if default_char.is_ascii_digit() {
                     self.handle_number();
                     None
-                } else if default_char.is_alphabetic() {
+                } else if default_char.is_alphabetic() || default_char == '_' {
                     self.handle_identifier();
                     None
                 } else {
@@ -251,7 +257,7 @@ impl Scanner {
     }
 
     fn handle_identifier(&mut self) {
-        while self.peek().is_alphanumeric() {
+        while self.peek().is_alphanumeric() || self.peek() == '_' {
             self.advance();
         }
 

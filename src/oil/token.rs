@@ -15,6 +15,7 @@ pub enum TokenType {
     Semicolon,
     Slash,
     Asterisk,
+    Mod,
 
     Not,
     NotEqual,
@@ -39,6 +40,7 @@ pub enum TokenType {
     Null,
     Or,
     Print,
+    ReadInput,
     Return,
     Super,
     This,

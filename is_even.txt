@@ -1,0 +1,8 @@
+var input;
+
+print "Input value:";
+read_input input;
+
+print "";
+print "Is even:";
+print input % 2 == 0;
