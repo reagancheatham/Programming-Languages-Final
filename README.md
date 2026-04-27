@@ -1,4 +1,6 @@
-Olive Oil (or just Oil for short) is a language implemented with Rust based on Robert Nystrom's [_Crafting Interpreters_](https://craftinginterpreters.com/).
+Oil
+--------
+Olive Oil (or just Oil for short) is a language implemented with Rust based on Robert Nystrom's [_Crafting Interpreters_](https://craftinginterpreters.com/). Before anyone asks, the name 'Olive Oil' is derived from the game engine I occasionally work on, _Olive_.
 
 As Oil is implemented in Rust, it is run by simply calling 'cargo run' in terminal. If a parameter is passed, then Oil will attempt to execute the contents of the passed file (i.e. `cargo run -- hello_word.txt`). 
 
