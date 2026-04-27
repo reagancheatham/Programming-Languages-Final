@@ -162,7 +162,7 @@ impl Interpreter {
 
         match (operator.token_type, left, right) {
             (TokenType::EqualEqual, l, r) => Ok(Object::Bool(l.is_equal(&r))),
-            (TokenType::NotEqual, l, r) => Ok(Object::Bool(l.is_equal(&r))),
+            (TokenType::NotEqual, l, r) => Ok(Object::Bool(!l.is_equal(&r))),
 
             (TokenType::Greater, Object::Num(l), Object::Num(r)) => Ok(Object::Bool(l > r)),
             (TokenType::GreaterEqual, Object::Num(l), Object::Num(r)) => Ok(Object::Bool(l >= r)),

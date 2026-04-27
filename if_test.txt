@@ -1,0 +1,17 @@
+var input = 0;
+
+while (input != 42) {
+    print "Guess the magic number:";
+    read_input input;
+
+    if (input != 42) {
+        print "";
+        print "Wrong, try again!";
+    } else { // this just exists to use else
+        print "";
+        print "Woah!";
+    }
+}
+
+print "";
+print "You guessed correctly!";
