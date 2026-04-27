@@ -63,6 +63,7 @@ impl Interpreter {
                 let value = self.evaluate_expression(expr)?;
 
                 println!("{value}");
+                //println!("{}", expr.to_tree());
             }
             Statement::ReadInput { target_var } => {
                 let mut input = String::new();

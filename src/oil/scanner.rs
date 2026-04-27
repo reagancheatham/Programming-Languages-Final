@@ -77,6 +77,8 @@ impl Scanner {
             ')' => Some(TokenType::RightParen),
             '{' => Some(TokenType::LeftBrace),
             '}' => Some(TokenType::RightBrace),
+            '[' => Some(TokenType::LeftBracket),
+            ']' => Some(TokenType::RightBracket),
             ',' => Some(TokenType::Comma),
             '.' => Some(TokenType::Period),
             '-' => Some(TokenType::Minus),

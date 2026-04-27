@@ -194,18 +194,18 @@ impl Parser {
     }
 
     fn assignment(&mut self) -> Result<Expression> {
-        let expression = self.or()?;
+        let expr = self.or()?;
 
         if self.match_next(&[TokenType::Equal]) {
             let value = self.assignment()?;
 
-            return match expression {
+            return match expr {
                 Expression::Variable { name } => Ok(Expression::assign(name, value)),
                 _ => Err(Self::error(self.previous(), "Invalid assignment target.")),
             };
         }
 
-        Ok(expression)
+        Ok(expr)
     }
 
     fn or(&mut self) -> Result<Expression> {
@@ -292,6 +292,16 @@ impl Parser {
     }
 
     fn unary(&mut self) -> Result<Expression> {
+        let expr = self.primary()?;
+
+        if self.match_next(&[TokenType::LeftBracket]) {
+            let index_expr = self.expression()?;
+
+            return match expr {
+                Expression::Variable { name } => Ok(Expression::index(name, index))
+            }
+        }
+
         if self.match_next(&[TokenType::Not, TokenType::Minus]) {
             let operator = self.previous().clone();
             let right = self.unary()?;

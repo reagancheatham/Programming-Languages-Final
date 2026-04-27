@@ -30,6 +30,10 @@ pub enum Expression {
         operator: Token,
         right: Expr,
     },
+    Index {
+        target: Token,
+        index: i32,
+    },
     Variable {
         name: Token,
     },
@@ -76,6 +80,10 @@ impl Expression {
         }
     }
 
+    pub fn index(target: Token, index: i32) -> Expression {
+        Self::Index { target, index }
+    }
+
     pub fn variable(name: Token) -> Expression {
         Self::Variable { name }
     }
@@ -96,6 +104,7 @@ impl Expression {
                 operator,
                 right,
             } => Self::parenthesize(&operator.lexeme, &[left, right]),
+            Self::Index { target, index } => format!("{} [{index}]", target.lexeme),
             Self::Variable { name } => name.to_string(),
         }
     }
